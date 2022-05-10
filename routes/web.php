@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])
-    ->name('home');
+Route::get('/', function () {
+    return view('pages.index');
+})->name('home');
 
-Route::get('/login', function() {
-    return view('pages.login');
-})->name('login');
-
-Route::get('/checkout', function() {
+Route::get('/checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
-Route::get('/success', function() {
+Route::get('/success', function () {
     return view('pages.success');
 })->name('success');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
