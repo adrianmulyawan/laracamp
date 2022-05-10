@@ -24,3 +24,7 @@ Route::get('/login', function() {
 Route::get('/checkout', function() {
     return view('pages.checkout');
 })->name('checkout');
+
+Route::get('/success', function() {
+    return view('pages.success');
+})->name('success');
