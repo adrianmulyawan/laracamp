@@ -21,6 +21,18 @@
                     <a class="nav-link" href="#">Business</a>
                 </li>
             </ul>
+
+            {{-- Jika User Login --}}
+            @auth
+                <div class="d-flex user-logged">
+                    <a href="#">
+                        Halo, {{ Auth::user()->name }}!
+                        <img src="{{ asset('laracamp-template/assets/images/user_photo.png') }}" class="user-photo" alt="">
+                    </a>
+                </div>
+            @endauth
+
+            {{-- Jika Belum Login --}}
             <div class="d-flex">
                 <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
                     Sign In
