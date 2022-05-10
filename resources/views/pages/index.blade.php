@@ -1,59 +1,8 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('title', 'Laracamp by BuildWith Angga')
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/styles/main.css" type="text/css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <title>Laracamp by BuildWith Angga</title>
-</head>
-
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="/assets/images/logo.png" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Program</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Mentor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Business</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a href="#" class="btn btn-master btn-secondary me-3">
-                        Sign In
-                    </a>
-                    <a href="#" class="btn btn-master btn-primary">
-                        Sign Up
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+@section('content')
     <section class="banner">
         <div class="container">
             <div class="row justify-content-center">
@@ -77,7 +26,7 @@
                         </div>
                         <div class="col-lg-6 col-12 text-center">
                             <a href="#">
-                                <img src="/assets/images/banner.png" class="img-fluid" alt="">
+                                <img src="{{ asset('laracamp-template/assets/images/banner.png') }}" class="img-fluid" alt="">
                             </a>
                         </div>
                     </div>
@@ -85,7 +34,7 @@
             </div>
             <div class="row brands">
                 <div class="col-lg-12 col-12 text-center">
-                    <img src="/assets/images/brands.png" alt="">
+                    <img src="{{ asset('laracamp-template/assets/images/brands.png') }}" alt="">
                 </div>
             </div>
         </div>
@@ -107,7 +56,7 @@
             <div class="row">
                 <div class="col-lg-3 col-12">
                     <div class="item-benefit">
-                        <img src="/assets/images/ic_globe.png" class="icon" alt="">
+                        <img src="{{ asset('laracamp-template/assets/images/ic_globe.png') }}" class="icon" alt="">
                         <h3 class="title">
                             Diversity
                         </h3>
@@ -118,7 +67,7 @@
                 </div>
                 <div class="col-lg-3 col-12">
                     <div class="item-benefit">
-                        <img src="/assets/images/ic_globe-1.png" class="icon" alt="">
+                        <img src="{{ asset('laracamp-template/assets/images/ic_globe-1') }}.png" class="icon" alt="">
                         <h3 class="title">
                             A.I Guideline
                         </h3>
@@ -129,7 +78,7 @@
                 </div>
                 <div class="col-lg-3 col-12">
                     <div class="item-benefit">
-                        <img src="/assets/images/ic_globe-2.png" class="icon" alt="">
+                        <img src="{{ asset('laracamp-template/assets/images/ic_globe-2') }}.png" class="icon" alt="">
                         <h3 class="title">
                             1-1 Mentoring
                         </h3>
@@ -140,7 +89,7 @@
                 </div>
                 <div class="col-lg-3 col-12">
                     <div class="item-benefit">
-                        <img src="/assets/images/ic_globe-3.png" class="icon" alt="">
+                        <img src="{{ asset('laracamp-template/assets/images/ic_globe-3') }}.png" class="icon" alt="">
                         <h3 class="title">
                             Future Job
                         </h3>
@@ -157,7 +106,7 @@
         <div class="container">
             <div class="row item-step pb-70">
                 <div class="col-lg-6 col-12 text-center">
-                    <img src="/assets/images/step1.png" class="cover" alt="">
+                    <img src="{{ asset('laracamp-template/assets/images/step1.png') }}" class="cover" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-left copywriting">
                     <p class="story">
@@ -194,13 +143,13 @@
                     </p>
                 </div>
                 <div class="col-lg-6 col-12 text-center">
-                    <img src="/assets/images/step2.png" class="cover" alt="">
+                    <img src="{{ asset('laracamp-template/assets/images/step2.png') }}" class="cover" alt="">
                 </div>
 
             </div>
             <div class="row item-step">
                 <div class="col-lg-6 col-12 text-center">
-                    <img src="/assets/images/step3.png" class="cover" alt="">
+                    <img src="{{ asset('laracamp-template/assets/images/step3.png') }}" class="cover" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-left copywriting">
                     <p class="story">
@@ -252,7 +201,7 @@
                                     $280K
                                 </h1>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Pro Techstack Kit
                                     </p>
@@ -260,7 +209,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         iMac Pro 2021 & Display
                                     </p>
@@ -268,7 +217,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         1-1 Mentoring Program
                                     </p>
@@ -276,7 +225,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Final Project Certificate
                                     </p>
@@ -284,7 +233,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Offline Course Videos
                                     </p>
@@ -292,7 +241,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Future Job Opportinity
                                     </p>
@@ -300,7 +249,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Premium Design Kit
                                     </p>
@@ -308,7 +257,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Website Builder
                                     </p>
@@ -330,7 +279,7 @@
                                     $140K
                                 </h1>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         1-1 Mentoring Program
                                     </p>
@@ -338,7 +287,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Final Project Certificate
                                     </p>
@@ -346,7 +295,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing mb-4">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Offline Course Videos
                                     </p>
@@ -354,7 +303,7 @@
                                     <div class="divider"></div>
                                 </div>
                                 <div class="item-benefit-pricing">
-                                    <img src="/assets/images/ic_check.svg" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
                                     <p>
                                         Future Job Opportinity
                                     </p>
@@ -372,7 +321,7 @@
             </div>
             <div class="row pb-70">
                 <div class="col-lg-12 col-12 text-center">
-                    <img src="/assets/images/brands.png" height="30" alt="">
+                    <img src="{{ asset('laracamp-template/assets/images/brands.png') }}" height="30" alt="">
                 </div>
             </div>
         </div>
@@ -395,12 +344,12 @@
                     <div class="row">
                         <div class="col-lg-4 col-12">
                             <div class="item-review">
-                                <img src="/assets/images/stars.svg" alt="">
+                                <img src="{{ asset('laracamp-template/assets/images/stars.svg') }}" alt="">
                                 <p class="message">
                                     I was not really into code but after they teach me how to train my logic then I was really fall in love with code
                                 </p>
                                 <div class="user">
-                                    <img src="/assets/images/fanny_photo.png" class="photo" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/fanny_photo.png') }}" class="photo" alt="">
                                     <div class="info">
                                         <h4 class="name">
                                             Fanny
@@ -414,12 +363,12 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="item-review">
-                                <img src="/assets/images/stars.svg" alt="">
+                                <img src="{{ asset('laracamp-template/assets/images/stars.svg') }}" alt="">
                                 <p class="message">
                                     Code is really important if we want to build a company and strike to the win
                                 </p>
                                 <div class="user">
-                                    <img src="/assets/images/angga.png" class="photo" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/angga.png') }}" class="photo" alt="">
                                     <div class="info">
                                         <h4 class="name">
                                             Angga
@@ -433,12 +382,12 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="item-review">
-                                <img src="/assets/images/stars.svg" alt="">
+                                <img src="{{ asset('laracamp-template/assets/images/stars.svg') }}" alt="">
                                 <p class="message">
                                     My background is design and art but I do really love how to make my design working in the development phase
                                 </p>
                                 <div class="user">
-                                    <img src="/assets/images/beatrice.png" class="photo" alt="">
+                                    <img src="{{ asset('laracamp-template/assets/images/beatrice.png') }}" class="photo" alt="">
                                     <div class="info">
                                         <h4 class="name">
                                             Beatrice
@@ -462,12 +411,4 @@
             </div>
         </div>
     </section>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-
-</body>
-
-</html>
+@endsection
