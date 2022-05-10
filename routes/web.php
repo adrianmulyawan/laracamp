@@ -20,3 +20,7 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/login', function() {
     return view('pages.login');
 })->name('login');
+
+Route::get('/checkout', function() {
+    return view('pages.checkout');
+})->name('checkout');
