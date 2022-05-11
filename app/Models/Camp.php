@@ -18,4 +18,9 @@ class Camp extends Model
     ];
 
     protected $hidden = []; 
+
+    public function camp_benefits()
+    {
+        return $this->hasMany(CampBenefit::class, 'camp_id', 'id');
+    }
 }

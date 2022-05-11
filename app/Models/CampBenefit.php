@@ -17,4 +17,9 @@ class CampBenefit extends Model
     ];
 
     protected $hidden = [];
+
+    public function camp()
+    {
+        return $this->belongsTo(Camp::class, 'camp_id', 'id');
+    }
 }

@@ -192,7 +192,34 @@
                 </div>
                 <div class="col-lg-7 col-12">
                     <div class="row">
-                        <div class="col-lg-6 col-12">
+                        @foreach ($camps as $camp)
+                            <div class="col-lg-6 col-12">
+                                <div class="table-pricing paket-gila">
+                                    <p class="story text-center">
+                                        {{ $camp->title }}
+                                    </p>
+                                    <h1 class="price text-center">
+                                        Rp {{ number_format($camp->price,2,',','.') }}
+                                    </h1>
+                                    @foreach ($camp->camp_benefits as $benefit)
+                                        <div class="item-benefit-pricing mb-4">
+                                            <img src="{{ asset('laracamp-template/assets/images/ic_check.svg') }}" alt="">
+                                            <p>
+                                                {{ $benefit->name }}
+                                            </p>
+                                            <div class="clear"></div>
+                                            <div class="divider"></div>
+                                        </div>
+                                    @endforeach
+                                    <p>
+                                        <a href="{{ route('checkout', $camp->slug) }}" class="btn btn-master btn-primary w-100 mt-3">
+                                            Take This Plan
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                        {{-- <div class="col-lg-6 col-12">
                             <div class="table-pricing paket-gila">
                                 <p class="story text-center">
                                     GILA BELAJAR
@@ -315,7 +342,7 @@
                                     </a>
                                 </p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
