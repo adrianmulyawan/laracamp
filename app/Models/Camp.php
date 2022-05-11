@@ -23,4 +23,9 @@ class Camp extends Model
     {
         return $this->hasMany(CampBenefit::class, 'camp_id', 'id');
     }
+
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class, 'camp_id', 'id');
+    }
 }

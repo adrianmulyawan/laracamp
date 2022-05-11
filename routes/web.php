@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,21 +19,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/checkout/{slug}', function () {
-    return view('pages.checkout');
-})->name('checkout');
+Route::get('/checkout/success', [CheckoutController::class, 'success'])
+    ->name('checkout.success');
+Route::get('/checkout/{camp:slug}', [CheckoutController::class, 'create'])
+    ->name('checkout.create');
+Route::post('/checkout/{camp}', [CheckoutController::class, 'store'])
+    ->name('checkout.store');
 
-Route::get('/success', function () {
-    return view('pages.success');
-})->name('success');
-
-// Socialite Routes
+// ============================ Socialite Routes ============================
 Route::get('/auth/google/redirect', [LoginController::class, 'google'])
     ->name('user.login.google');
 
 Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])
     ->name('user.google.callback');
-// End Socialite Routes
+// ============================ End Socialite Routes ============================
 
 Route::get('/dashboard', function () {
     return view('dashboard');

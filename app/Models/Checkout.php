@@ -18,4 +18,20 @@ class Checkout extends Model
     ];
 
     protected $hidden = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function camp()
+    {
+        return $this->belongsTo(Camp::class, 'camp_id', 'id');
+    }
+
+    public function setExpiredAttribute($value)
+    {
+        $this->attributes['expired'] = date('Y-m-t', strtotime($value));
+
+    }
 }
