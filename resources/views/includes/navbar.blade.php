@@ -24,10 +24,32 @@
 
             {{-- Jika User Login --}}
             @auth
-                <div class="d-flex user-logged">
-                    <a href="#">
+                <div class="d-flex user-logged nav-item dropdown no-arrow">
+                    <a href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         Halo, {{ \Illuminate\Support\Str::of(Auth::user()->name)->words(1, '') }}!
-                        <img src="{{ asset('laracamp-template/assets/images/user_photo.png') }}" class="user-photo" alt="">
+                        <img src="{{ Auth::user()->avatar }}" class="user-photo rounded-circle" alt="">
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 0; left: auto">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    My Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Settings
+                                </a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                            </li>
+                        </ul>
                     </a>
                 </div>
             @endauth
