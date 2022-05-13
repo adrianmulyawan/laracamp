@@ -25,8 +25,17 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camp $camp)
+    public function create(Request $request, Camp $camp)
     {
+        // Validasi Jika User Telah Mendaftar Salah Satu Bootcamp
+        if (Checkout::where('camp_id', $camp->id)->where('user_id', Auth::user()->id)->exists()) {
+            $request->session()->flash('error', "You already registered in $camp->title program!");
+
+            return redirect()->route('dashboard.user');
+        }
+        // exists(): function php untuk cek apakah ada data yang sama didalam db
+        // dalam studi kasus ini kita cek apakah user yang login pernah daftar di bootcamp ini
+
         return view('pages.checkout.checkout',compact('camp'));
     }
 

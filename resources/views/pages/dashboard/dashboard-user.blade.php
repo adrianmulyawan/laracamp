@@ -16,6 +16,9 @@
                 </div>
             </div>
             <div class="row my-5">
+                <div class="col-lg-8 col-md-12 col-sm-12 header-wrap">
+                    @include('includes.alert')
+                </div>
                 <table class="table">
                     <tbody>
                         @forelse ($items as $item)
