@@ -15,10 +15,9 @@
                     </h2>
                 </div>
             </div>
-            <div class="row my-5">
-                <div class="col-lg-8 col-md-12 col-sm-12 header-wrap">
-                    @include('includes.alert')
-                </div>
+            <div class="row my-5">      
+                {{-- Session Flash Message --}}
+                @include('includes.alert')
                 <table class="table">
                     <tbody>
                         @forelse ($items as $item)
