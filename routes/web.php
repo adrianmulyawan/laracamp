@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\User\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +20,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/checkout/success', [CheckoutController::class, 'success'])
+// Route Group Checkout
+Route::middleware(['auth'])->group(function() {
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])
     ->name('checkout.success');
-Route::get('/checkout/{camp:slug}', [CheckoutController::class, 'create'])
-    ->name('checkout.create');
-Route::post('/checkout/{camp}', [CheckoutController::class, 'store'])
-    ->name('checkout.store');
+    Route::get('/checkout/{camp:slug}', [CheckoutController::class, 'create'])
+        ->name('checkout.create');
+    Route::post('/checkout/{camp}', [CheckoutController::class, 'store'])
+        ->name('checkout.store');
+});
+
+// Route Group Dashboard User
+Route::prefix('/dashboard/user')
+    ->namespace('DashboardUser')
+    ->middleware(['auth'])
+    ->group(function() {
+        Route::get('/', [DashboardUserController::class, 'index'])
+            ->name('dashboard.user');
+    }
+);
 
 // ============================ Socialite Routes ============================
 Route::get('/auth/google/redirect', [LoginController::class, 'google'])
