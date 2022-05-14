@@ -25,10 +25,13 @@ Route::get('/', [HomeController::class, 'index'])
 // Route Group Checkout
 Route::middleware(['auth'])->group(function() {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])
-    ->name('checkout.success');
+        ->middleware(['ensureUserRole:user'])
+        ->name('checkout.success');
     Route::get('/checkout/{camp:slug}', [CheckoutController::class, 'create'])
+        ->middleware(['ensureUserRole:user'])       
         ->name('checkout.create');
     Route::post('/checkout/{camp}', [CheckoutController::class, 'store'])
+        ->middleware(['ensureUserRole:user'])
         ->name('checkout.store');
 
     // Parent Dashboard (Untuk Cek Pengalihan Dashboard Apakah User Yang Login Admin/Bukan)
@@ -38,6 +41,7 @@ Route::middleware(['auth'])->group(function() {
     // Route Group Dashboard User
     Route::prefix('/dashboard/user')
         ->namespace('DashboardUser')
+        ->middleware(['ensureUserRole:user'])
         ->group(function() {
             Route::get('/', [DashboardUserController::class, 'index'])
                 ->name('dashboard.user');
@@ -47,6 +51,7 @@ Route::middleware(['auth'])->group(function() {
     // Route Group Dashboard Admin
     Route::prefix('/dashboard/admin')
         ->namespace('DashboardAdmin')
+        ->middleware(['ensureUserRole:admin'])
         ->group(function() {
             Route::get('/', [DashboardAdminController::class, 'index'])
                 ->name('dashboard.admin');
