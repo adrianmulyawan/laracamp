@@ -27,8 +27,11 @@
                 <div class="d-flex user-logged nav-item dropdown no-arrow">
                     <a href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         Halo, {{ \Illuminate\Support\Str::of(Auth::user()->name)->words(1, '') }}!
-                        <img src="{{ Auth::user()->avatar }}" class="user-photo rounded-circle" alt="">
-
+                        @if (Auth::user()->avatar)
+                            <img src="{{ Auth::user()->avatar }}" class="user-photo rounded-circle" alt="">
+                        @else
+                            <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" class="user-photo rounded-circle" alt="">
+                        @endif
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 0; left: auto">
                             <li>
                                 <a href="{{ route('dashboard.user') }}" class="dropdown-item">
