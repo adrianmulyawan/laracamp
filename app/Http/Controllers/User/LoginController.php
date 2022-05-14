@@ -4,9 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Mail;
+use App\Mail\User\AfterRegister;
 
 class LoginController extends Controller
 {
@@ -27,7 +28,7 @@ class LoginController extends Controller
     {
         $callback = Socialite::driver('google')->stateless()->user();
 
-        // Parsing data
+        # Parsing data
         $data = [
             'name' => $callback->getName(),
             'email' => $callback->getEmail(),
@@ -35,16 +36,27 @@ class LoginController extends Controller
             'email_verified_at' => date('Y-m-d H:i:s', time()),
         ];
 
-        // Create data user
-        // firstOrCreate: jika bertemu email yang sama tidak perlu menambahkan data baru, jika tidak ketemu akan ditambahkan data baru
-        $user = User::firstOrCreate(
-            ['email' => $data['email']], $data
-        );
+        # Create data user
+        # firstOrCreate: jika bertemu email yang sama (pernah login) tidak perlu menambahkan data baru, jika tidak ketemu akan ditambahkan data baru
+        // $user = User::firstOrCreate(
+        //     ['email' => $data['email']], $data
+        // );
 
-        // Khusus login
+        # Cari Data User Berdasarkan Email
+        $user = User::whereEmail($data['email'])->first();
+        # Jika Email Tidak Ditemukan (Berarti ini pengguna baru (user register))
+        if (!$user) {
+            # Tambahkan data user kedalam db
+            $user = User::create($data);
+            
+            # Kirim email ke user yang baru register
+            Mail::to($user->email)->send(new AfterRegister($user));
+        }
+
+        # Khusus login
         Auth::login($user, true);
 
-        // Setelah berhasil login diarahkan kehalaman utama sistem
+        # Setelah berhasil login diarahkan kehalaman utama sistem
         return redirect()->route('home');
     }
 }
