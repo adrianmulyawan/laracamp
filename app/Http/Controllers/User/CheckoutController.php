@@ -120,9 +120,4 @@ class CheckoutController extends Controller
     {
         return view('pages.checkout.success');
     }
-
-    public function invoice(Checkout $checkout)
-    {
-        return $checkout;
-    }
 }
