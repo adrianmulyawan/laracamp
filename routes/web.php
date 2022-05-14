@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\DashboardUserController;
@@ -28,17 +30,29 @@ Route::middleware(['auth'])->group(function() {
         ->name('checkout.create');
     Route::post('/checkout/{camp}', [CheckoutController::class, 'store'])
         ->name('checkout.store');
-});
 
-// Route Group Dashboard User
-Route::prefix('/dashboard/user')
-    ->namespace('DashboardUser')
-    ->middleware(['auth'])
-    ->group(function() {
-        Route::get('/', [DashboardUserController::class, 'index'])
-            ->name('dashboard.user');
-    }
-);
+    // Parent Dashboard (Untuk Cek Pengalihan Dashboard Apakah User Yang Login Admin/Bukan)
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+        ->name('dashboard');
+
+    // Route Group Dashboard User
+    Route::prefix('/dashboard/user')
+        ->namespace('DashboardUser')
+        ->group(function() {
+            Route::get('/', [DashboardUserController::class, 'index'])
+                ->name('dashboard.user');
+        }
+    );
+
+    // Route Group Dashboard Admin
+    Route::prefix('/dashboard/admin')
+        ->namespace('DashboardAdmin')
+        ->group(function() {
+            Route::get('/', [DashboardAdminController::class, 'index'])
+                ->name('dashboard.admin');
+        }
+    );
+});
 
 // ============================ Socialite Routes ============================
 Route::get('/auth/google/redirect', [LoginController::class, 'google'])
@@ -48,8 +62,8 @@ Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleProvid
     ->name('user.google.callback');
 // ============================ End Socialite Routes ============================
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

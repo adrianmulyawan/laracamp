@@ -34,7 +34,7 @@
                         @endif
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 0; left: auto">
                             <li>
-                                <a href="{{ route('dashboard.user') }}" class="dropdown-item">
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">
                                     My Dashboard
                                 </a>
                             </li>

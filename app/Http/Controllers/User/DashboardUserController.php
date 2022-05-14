@@ -14,6 +14,6 @@ class DashboardUserController extends Controller
         $items = Checkout::with(['camp'])->whereUserId(Auth::user()->id)->get();
         // whereUserId() => where('user_id', Auth::user()->id)
         
-        return view('pages.dashboard.dashboard-user', compact('items'));
+        return view('pages.dashboard-user.dashboard', compact('items'));
     }
 }
