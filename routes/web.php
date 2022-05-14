@@ -37,6 +37,8 @@ Route::prefix('/dashboard/user')
     ->group(function() {
         Route::get('/', [DashboardUserController::class, 'index'])
             ->name('dashboard.user');
+        Route::get('/checkout/invoice/{checkout}', [CheckoutController::class, 'invoice'])
+            ->name('user.checkout.invoice');
     }
 );
 
