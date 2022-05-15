@@ -3,70 +3,63 @@
 @section('title', 'Dashboard User')
 
 @section('content')
-    <section class="dashboard my-5">
-        <div class="container">
-            <div class="row text-left">
-                <div class=" col-lg-12 col-12 header-wrap mt-4">
-                    <p class="story">
-                        DASHBOARD
-                    </p>
-                    <h2 class="primary-header ">
-                        My Bootcamps
-                    </h2>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-12 col-md-12 col-lg-10">
+                <div class="card">
+                    <div class="card-header">
+                        My Camps
+                    </div>
+                    <div class="card-body">
+                        @include('includes.alert')
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Camp</th>
+                                    <th>Price</th>
+                                    <th>Register Data</th>
+                                    <th>Paid Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($items as $item)
+                                    <tr>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->camp->title }}</td>
+                                        <td>Rp {{ number_format($item->camp->price,2,',','.') }}</td>
+                                        <td>{{ \Carbon\Carbon::create($item->created_at)->format('d M Y') }}</td>
+                                        <td>
+                                            @if ($item->is_paid == 1)
+                                                <span class="badge bg-success">
+                                                    PAID
+                                                </span>
+                                            @else
+                                                <span class="badge bg-warning">
+                                                    UNPAID
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <form action="" method="POST">
+                                                @csrf
+                                                <button class="btn btn-primary btn-sm">Set to Paid</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-center" colspan="6">
+                                            Data Not Found!
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="row my-5">      
-                {{-- Session Flash Message --}}
-                @include('includes.alert')
-                <table class="table">
-                    <tbody>
-                        @forelse ($items as $item)
-                            <tr class="align-middle">
-                                <td width="18%">
-                                    <img src="{{ asset('laracamp-template/assets/images/item_bootcamp.png') }}" height="120" alt="">
-                                </td>
-                                <td>
-                                    <p class="mb-2">
-                                        <strong>
-                                            {{ $item->camp->title }}
-                                        </strong>
-                                    </p>
-                                    <p>
-                                        {{ \Carbon\Carbon::create($item->created_at)->format('M d, Y') }}
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>
-                                        Rp {{ number_format($item->camp->price,2,',','.') }}
-                                    </strong>
-                                </td>
-                                <td>
-                                    @if ($item->is_paid)
-                                        <strong class="text-success">
-                                            Payment Success
-                                        </strong>
-                                    @else
-                                        <strong>
-                                            Waiting for Payment
-                                        </strong>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="https://wa.me/081258161143?text=Hi, saya ingin bertanya mengenai kelas {{ $item->camp->title }}" class="btn btn-primary" target="__blank">
-                                        Contact Support
-                                    </a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr class="align-middle">
-                                <td colspan="5">
-                                    You haven't had any checkouts yet!
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
         </div>
-    </section>
+    </div>
 @endsection
