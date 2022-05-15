@@ -23,6 +23,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
+// ============================ Socialite Routes ============================
+Route::get('/auth/google/redirect', [LoginController::class, 'google'])
+    ->name('user.login.google');
+
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])
+    ->name('user.google.callback');
+// ============================ End Socialite Routes ============================
+
 // Route Group Checkout
 Route::middleware(['auth'])->group(function() {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])
@@ -63,14 +71,6 @@ Route::middleware(['auth'])->group(function() {
         }
     );
 });
-
-// ============================ Socialite Routes ============================
-Route::get('/auth/google/redirect', [LoginController::class, 'google'])
-    ->name('user.login.google');
-
-Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])
-    ->name('user.google.callback');
-// ============================ End Socialite Routes ============================
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
