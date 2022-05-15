@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCheckoutController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -55,6 +56,10 @@ Route::middleware(['auth'])->group(function() {
         ->group(function() {
             Route::get('/', [DashboardAdminController::class, 'index'])
                 ->name('dashboard.admin');
+            
+            // Set Checkout to Paid
+            Route::post('/checkout/{checkout}', [AdminCheckoutController::class, 'update'])
+                ->name('admin.checkout.update');
         }
     );
 });

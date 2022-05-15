@@ -42,10 +42,16 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <form action="" method="POST">
-                                                @csrf
-                                                <button class="btn btn-primary btn-sm">Set to Paid</button>
-                                            </form>
+                                            @if ($item->is_paid == 0)
+                                                <form action="{{ route('admin.checkout.update', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-sm">Set to Paid</button>
+                                                </form>
+                                            @else
+                                                <button disabled="disabled" class="btn btn-success btn-sm">
+                                                    User Paid
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
