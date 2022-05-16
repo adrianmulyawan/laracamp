@@ -144,7 +144,7 @@ class CheckoutController extends Controller
     public function getSnapRedirect(Checkout $checkout)
     {
         # Generate Booking Code
-        $orderId = 'Laracamp-'.$checkout->id.Str::random(5);
+        $orderId = $checkout->id.'-'.Str::random(5);
         # Harga Bootcamp
         $price = $checkout->camp->price;
         # Instansiasi $checkout->midtrans_booking_code menyimpan nilai $orderId
