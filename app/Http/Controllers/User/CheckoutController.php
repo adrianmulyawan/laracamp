@@ -7,12 +7,28 @@ use App\Http\Requests\User\CheckoutRequest;
 use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Mail;
 use App\Mail\Checkout\AfterCheckout;
+use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Support\Str;
+use Midtrans;
 
 class CheckoutController extends Controller
 {
+    # Set Midtrans Configuration
+    public function __construct()
+    {
+        // Set your Merchant Server Key
+        Midtrans\Config::$serverKey = env('MIDTRANS_SERVERKEY');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
+        // Set sanitization on (default)
+        Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
+        // Set 3DS transaction for credit card to true
+        Midtrans\Config::$is3ds = env('MIDTRANS_IS_3DS');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -64,6 +80,9 @@ class CheckoutController extends Controller
 
         // Create Checkout Data
         $checkout = Checkout::create($data);
+
+        // Tambahkan Function getSnapRedirect
+        $this->getSnapRedirect($checkout);
 
         // sending email 
         Mail::to(Auth::user()->email)->send(new AfterCheckout($checkout));
@@ -119,5 +138,72 @@ class CheckoutController extends Controller
     public function success()
     {
         return view('pages.checkout.success');
+    }
+
+    # Midtrans Handler
+    public function getSnapRedirect(Checkout $checkout)
+    {
+        # Generate Booking Code
+        $orderId = 'Laracamp-'.$checkout->id.Str::random(5);
+        # Harga Bootcamp
+        $price = $checkout->camp->price;
+        # Instansiasi $checkout->midtrans_booking_code menyimpan nilai $orderId
+        $checkout->midtrans_booking_code = $orderId;
+
+        $transaction_details = [
+            'order_id' => $orderId,
+            'gross_amount' => $price,
+        ];
+
+        $item_details = [
+            'id' => $orderId,
+            'price' => $price,
+            'quantity' => 1,
+            'name' => 'Payment for {$checkout->camp->title} Camp',
+        ];
+
+        $user_data = [
+            "first_name" => $checkout->user->name,
+            "last_name" => "",
+            "address" => $checkout->user->address,
+            "city" => "",
+            "postal_code" => "",
+            "phone" => $checkout->user->phone,
+            "country_code" => "IDN",
+        ];
+
+        $customer_details = [
+            "first_name" => $checkout->user->name,
+            "last_name"  => "",
+            "email"      => $checkout->user->email,
+            "phone"      => $checkout->user->phone,
+            "billing_address" => $user_data,
+            "shipping_address" => $user_data,
+        ];
+
+        /*
+            Simpan Kedalam Satu Objek:
+            $transaction_details, $item_details, $customer_details
+        */
+        $midtrans_params = [
+            'transaction_details' => $transaction_details,
+            'item_details'        => $item_details,
+            "customer_details"    => $customer_details,
+        ];
+
+        # Bracket Untuk Hit Kesisi Midtrans
+        try {
+            # Get Snap Payment Page Url
+            $paymentUrl = \Midtrans\Snap::createTransaction($midtrans_params)->redirect_url;
+
+            # Simpan $paymentUrl kedalam column midtrans_url pada tabel "checkouts"
+            $checkout->midtrans_url = $paymentUrl;
+            $checkout->save();
+
+            # return ke Variabel $paymentUrl
+            return $paymentUrl;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
