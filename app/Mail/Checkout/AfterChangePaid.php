@@ -31,7 +31,7 @@ class AfterChangePaid extends Mailable
     public function build()
     {
         return $this->subject('Your Transaction Has Been Confirmed')
-                    ->markdown('mails.checkout.paid', [
+                    ->markdown('emails.checkout.paid', [
                         'checkout' => $this->checkout
                     ]);
     }
