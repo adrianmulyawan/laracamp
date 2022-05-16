@@ -84,6 +84,7 @@ class CheckoutController extends Controller
         $checkout = Checkout::create($data);
 
         // Tambahkan Function getSnapRedirect
+        // dd($this->getSnapRedirect($checkout));
         $this->getSnapRedirect($checkout);
 
         // sending email 
@@ -149,6 +150,7 @@ class CheckoutController extends Controller
         $orderId = $checkout->id.'-'.Str::random(5);
         # Harga Bootcamp
         $price = $checkout->camp->price;
+        
         # Instansiasi $checkout->midtrans_booking_code menyimpan nilai $orderId
         $checkout->midtrans_booking_code = $orderId;
 
@@ -157,11 +159,11 @@ class CheckoutController extends Controller
             'gross_amount' => $price,
         ];
 
-        $item_details = [
+        $item_details[] = [
             'id' => $orderId,
             'price' => $price,
             'quantity' => 1,
-            'name' => 'Payment for {$checkout->camp->title} Camp',
+            'name' => "Payment for {$checkout->camp->title} Camp",
         ];
 
         $user_data = [
@@ -190,7 +192,7 @@ class CheckoutController extends Controller
         $midtrans_params = [
             'transaction_details' => $transaction_details,
             'item_details'        => $item_details,
-            "customer_details"    => $customer_details,
+            'customer_details'    => $customer_details,
         ];
 
         # Bracket Untuk Hit Kesisi Midtrans

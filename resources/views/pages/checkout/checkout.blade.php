@@ -56,14 +56,14 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input name="phone" type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" id="phone" value="{{ old('phone') ?: '' }}" required>
+                                    <input name="phone" type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" id="phone" value="{{ old('phone') ?: Auth::user()->phone }}" required>
                                     @if ($errors->has('phone'))
                                         <p class="text-danger">{{ $errors->first('phone') }}</p>
                                     @endif
                                 </div>
                                 <div class="mb-4">
                                     <label for="address" class="form-label">Address</label>
-                                    <input name="address" type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" id="address" value="{{ old('address') ?: '' }}" required>
+                                    <input name="address" type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" id="address" value="{{ old('address') ?: Auth::user()->address }}" required>
                                     @if ($errors->has('address'))
                                         <p class="text-danger">{{ $errors->first('address') }}</p>
                                     @endif
