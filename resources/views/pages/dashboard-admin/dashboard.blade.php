@@ -20,7 +20,6 @@
                                     <th>Price</th>
                                     <th>Register Data</th>
                                     <th>Paid Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,27 +30,9 @@
                                         <td>Rp {{ number_format($item->camp->price,2,',','.') }}</td>
                                         <td>{{ \Carbon\Carbon::create($item->created_at)->format('d M Y') }}</td>
                                         <td>
-                                            @if ($item->is_paid == 1)
-                                                <span class="badge bg-success">
-                                                    PAID
-                                                </span>
-                                            @else
-                                                <span class="badge bg-warning">
-                                                    UNPAID
-                                                </span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($item->is_paid == 0)
-                                                <form action="{{ route('admin.checkout.update', $item->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary btn-sm">Set to Paid</button>
-                                                </form>
-                                            @else
-                                                <button disabled="disabled" class="btn btn-success btn-sm">
-                                                    User Paid
-                                                </button>
-                                            @endif
+                                            <strong>
+                                                {{ strtoupper($item->payment_status) }}
+                                            </strong>
                                         </td>
                                     </tr>
                                 @empty
