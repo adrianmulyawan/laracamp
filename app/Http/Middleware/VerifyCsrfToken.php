@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // Pengecualian untuk pembayaran midtrans
+        'payment/success'
     ];
 }
