@@ -31,6 +31,10 @@ Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleProvid
     ->name('user.google.callback');
 // ============================ End Socialite Routes ============================
 
+// Midtrans Route Callback
+Route::get('/payment/success', [CheckoutController::class, 'midtransCallback']);
+Route::post('/payment/success', [CheckoutController::class, 'midtransCallback']);
+
 // Route Group Checkout
 Route::middleware(['auth'])->group(function() {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])

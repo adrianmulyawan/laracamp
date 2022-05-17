@@ -41,14 +41,15 @@
                                     </strong>
                                 </td>
                                 <td>
-                                    @if ($item->is_paid)
-                                        <strong class="text-success">
-                                            Payment Success
-                                        </strong>
-                                    @else
-                                        <strong>
-                                            Waiting for Payment
-                                        </strong>
+                                    <strong>
+                                        {{ strtoupper($item->payment_status) }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    @if ($item->payment_status == 'waiting')
+                                        <a href="{{ $item->midtrans_url }}" class="btn btn-primary">
+                                            Pay Now
+                                        </a>
                                     @endif
                                 </td>
                                 <td>
