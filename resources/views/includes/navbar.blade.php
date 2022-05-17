@@ -38,6 +38,13 @@
                                     My Dashboard
                                 </a>
                             </li>
+                            @if (Auth::user()->is_admin)
+                                <li>
+                                    <a href="{{ route('dashboard') }}" class="dropdown-item">
+                                        Discount
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <a href="#" class="dropdown-item">
                                     Settings
