@@ -15,7 +15,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard-admin.discount.index');
+        $items = Discount::all();
+        return view('pages.dashboard-admin.discount.index', compact('items'));
     }
 
     /**
@@ -25,7 +26,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.dashboard-admin.discount.create');
     }
 
     /**
