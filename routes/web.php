@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminCheckoutController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CheckoutController;
@@ -53,7 +54,6 @@ Route::middleware(['auth'])->group(function() {
 
     // Route Group Dashboard User
     Route::prefix('/dashboard/user')
-        ->namespace('DashboardUser')
         ->middleware(['ensureUserRole:user'])
         ->group(function() {
             Route::get('/', [DashboardUserController::class, 'index'])
@@ -63,15 +63,17 @@ Route::middleware(['auth'])->group(function() {
 
     // Route Group Dashboard Admin
     Route::prefix('/dashboard/admin')
-        ->namespace('DashboardAdmin')
         ->middleware(['ensureUserRole:admin'])
         ->group(function() {
             Route::get('/', [DashboardAdminController::class, 'index'])
                 ->name('dashboard.admin');
             
-            // Set Checkout to Paid
-            Route::post('/checkout/{checkout}', [AdminCheckoutController::class, 'update'])
-                ->name('admin.checkout.update');
+            # Set Checkout to Paid
+            // Route::post('/checkout/{checkout}', [AdminCheckoutController::class, 'update'])
+            //     ->name('admin.checkout.update');
+
+            # Discount Routing 
+            Route::resource('/discount', DiscountController::class);
         }
     );
 });
