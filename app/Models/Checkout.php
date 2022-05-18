@@ -15,6 +15,9 @@ class Checkout extends Model
     protected $fillable = [
         'user_id', 
         'camp_id',
+        'discount_id',
+        'discount_percentage',
+        'total',
         'payment_status',
         'midtrans_url', 
         'midtrans_booking_code'
