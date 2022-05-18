@@ -22,33 +22,49 @@
                         <table class="table table-responsive mt-2">
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Camp</th>
-                                    <th>Price</th>
-                                    <th>Register Data</th>
-                                    <th>Paid Status</th>
+                                    <th>No</th>
+                                    <th>Discount Name</th>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                    <th>Percentage</th>
+                                    <th colspan="2" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @forelse ($items as $item)
+                                <?php $counter = 0 ?>
+                                @forelse ($items as $item)
                                     <tr>
-                                        <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->camp->title }}</td>
-                                        <td>Rp {{ number_format($item->camp->price,2,',','.') }}</td>
-                                        <td>{{ \Carbon\Carbon::create($item->created_at)->format('d M Y') }}</td>
+                                        <td>{{ $counter += 1 }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td class="text-center">
+                                            <span class="badge bg-primary">
+                                                {{ $item->code }}
+                                            </span>
+                                        </td>
+                                        <td>{!! $item->description !!}</td>
+                                        <td class="text-center">{{ $item->percentage }}%</td>
                                         <td>
-                                            <strong>
-                                                {{ strtoupper($item->payment_status) }}
-                                            </strong>
+                                            <a href="{{ route('discount.edit', $item->id) }}" class="btn btn-warning">
+                                                Edit
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('discount.destroy', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger">
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
                                         <td class="text-center" colspan="6">
-                                            Data Not Found!
+                                            Data Discount Not Found!
                                         </td>
                                     </tr>
-                                @endforelse --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
