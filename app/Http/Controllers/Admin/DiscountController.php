@@ -66,7 +66,9 @@ class DiscountController extends Controller
      */
     public function edit(Discount $discount)
     {
-        //
+        $data = Discount::findOrFail($discount->id);
+
+        return view('pages.dashboard-admin.discount.edit', compact('data'));
     }
 
     /**
@@ -76,9 +78,14 @@ class DiscountController extends Controller
      * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discount $discount)
+    public function update(DiscountRequest $request, Discount $discount)
     {
-        //
+        $data = $request->all();
+        Discount::findOrFail($discount->id)->update($data);
+
+        $request->session()->flash('success', "Discout {$discount->name} has been updated");
+
+        return redirect()->route('discount.index');
     }
 
     /**
