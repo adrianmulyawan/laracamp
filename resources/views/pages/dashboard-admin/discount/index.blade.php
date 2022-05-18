@@ -52,7 +52,7 @@
                                             <form action="{{ route('discount.destroy', $item->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-danger">
+                                                <button type="submit" class="btn btn-danger">
                                                     Delete
                                                 </button>
                                             </form>
