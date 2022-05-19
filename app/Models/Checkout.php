@@ -15,6 +15,9 @@ class Checkout extends Model
     protected $fillable = [
         'user_id', 
         'camp_id',
+        'discount_id',
+        'discount_percentage',
+        'total',
         'payment_status',
         'midtrans_url', 
         'midtrans_booking_code'
@@ -30,6 +33,11 @@ class Checkout extends Model
     public function camp()
     {
         return $this->belongsTo(Camp::class, 'camp_id', 'id');
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class, 'discount_id', 'id');
     }
 
     public function setExpiredAttribute($value)
