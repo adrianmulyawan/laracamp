@@ -37,7 +37,12 @@
                                 </td>
                                 <td>
                                     <strong>
-                                        Rp {{ number_format($item->camp->price,2,',','.') }}
+                                        Rp {{ number_format($item->total,2,',','.') }}
+                                        @if ($item->discount_id)
+                                            <span class="badge bg-success">
+                                                Disc {{ $item->discount_percentage }}%
+                                            </span>
+                                        @endif
                                     </strong>
                                 </td>
                                 <td>
