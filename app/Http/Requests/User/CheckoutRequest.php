@@ -33,6 +33,7 @@ class CheckoutRequest extends FormRequest
             'occupation' => 'required|string',
             'phone' => 'required|string|max:20',
             'address' => 'required|string',
+            'discount' => 'nullable|string|exists:discounts,code,deleted_at,NULL',
         ];
     }
 }

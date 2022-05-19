@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="discount" class="form-label">Discount</label>
-                                    <input name="discount" type="text" class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" id="discount" value="{{ old('discount') }}" required>
+                                    <input name="discount" type="text" class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" id="discount" value="{{ old('discount') }}">
                                     @if ($errors->has('discount'))
                                         <p class="text-danger">{{ $errors->first('discount') }}</p>
                                     @endif

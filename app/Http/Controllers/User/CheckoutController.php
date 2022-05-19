@@ -9,6 +9,7 @@ use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Mail;
 use App\Mail\Checkout\AfterCheckout;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Str;
@@ -68,7 +69,6 @@ class CheckoutController extends Controller
     {
         // Mapping Request Data
         $data = $request->all();
-        return $data;
         $data['user_id'] = Auth::user()->id;
         $data['camp_id'] = $camp->id;
 
@@ -81,8 +81,21 @@ class CheckoutController extends Controller
         $user->address = $data['address'];
         $user->save();
 
+        // Check Discount (Diisi User / Tidak)
+        if ($request->discount) {
+            // Jika diisi field discountnya (jalankan code ini) / cari data diskonnya
+            $discount = Discount::where('code', $request->discount)->first();
+            // Simpan discount_id didalam table checkouts
+            $data['discount_id'] = $discount->id;
+            // Simpan discount_percentage didalam table checkouts
+            $data['discount_percentage'] = $discount->percentage;
+            // Simpan total transaksi didalam table checkout
+        }
+
         // Create Checkout Data
         $checkout = Checkout::create($data);
+
+        return $checkout;
 
         // Tambahkan Function getSnapRedirect
         // dd($this->getSnapRedirect($checkout));
