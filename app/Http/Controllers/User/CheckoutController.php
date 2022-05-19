@@ -9,6 +9,7 @@ use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Mail;
 use App\Mail\Checkout\AfterCheckout;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Str;
@@ -79,6 +80,16 @@ class CheckoutController extends Controller
         $user->phone = $data['phone'];
         $user->address = $data['address'];
         $user->save();
+
+        // Check Discount (Diisi User / Tidak)
+        if ($request->discount) {
+            // Jika diisi field discountnya (jalankan code ini) / cari data diskonnya
+            $discount = Discount::where('code', $request->discount)->first();
+            // Simpan discount_id didalam table checkouts
+            $data['discount_id'] = $discount->id;
+            // Simpan discount_percentage didalam table checkouts
+            $data['discount_percentage'] = $discount->percentage;
+        }
 
         // Create Checkout Data
         $checkout = Checkout::create($data);
@@ -154,16 +165,38 @@ class CheckoutController extends Controller
         # Instansiasi $checkout->midtrans_booking_code menyimpan nilai $orderId
         $checkout->midtrans_booking_code = $orderId;
 
-        $transaction_details = [
-            'order_id' => $orderId,
-            'gross_amount' => $price,
-        ];
-
+        # Menyimpan Item yang di checkout
         $item_details[] = [
             'id' => $orderId,
             'price' => $price,
             'quantity' => 1,
             'name' => "Payment for {$checkout->camp->title} Camp",
+        ];
+
+        # ============================= Logic discount =============================
+        # Instansiasi Harga Diskon
+        $discountPrice = 0;
+        # Jika didalam checkout ada discount
+        if ($checkout->discount) {
+            # Simpan Harga Diskon
+            $discountPrice = $price * $checkout->discount_percentage / 100;
+            # Kita tambahkan $item_details baru untuk menyimpan discount
+            $item_details[] = [
+                'id' => $checkout->discount->code,
+                'price' => -$discountPrice,
+                'quantity' => 1,
+                'name' => "Discount {$checkout->discount->name} ({$checkout->discount_percentage}%)",
+            ];
+        }
+        # =========================== End Logic discount ===========================
+
+        # Set Total Transaksi
+        $total = $price - $discountPrice;
+        
+        # Menyimpan detail transaksi (order id, dan harganya)
+        $transaction_details = [
+            'order_id' => $orderId,
+            'gross_amount' => $total,
         ];
 
         $user_data = [
@@ -200,8 +233,10 @@ class CheckoutController extends Controller
             # Get Snap Payment Page Url
             $paymentUrl = \Midtrans\Snap::createTransaction($midtrans_params)->redirect_url;
 
-            # Simpan $paymentUrl kedalam column midtrans_url pada tabel "checkouts"
+            # mengambil link pembayaran dan menyimpannya kedalam column "midtrans_url"
             $checkout->midtrans_url = $paymentUrl;
+            # mengambil total pembayaran (setelah diskon) dan menyimpannya kedalam column "total"
+            $checkout->total = $total;
             $checkout->save();
 
             # return ke Variabel $paymentUrl

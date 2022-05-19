@@ -27,7 +27,16 @@
                                     <tr>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->camp->title }}</td>
-                                        <td>Rp {{ number_format($item->camp->price,2,',','.') }}</td>
+                                        <td>
+                                            <strong>
+                                                Rp {{ number_format($item->total,2,',','.') }}
+                                                @if ($item->discount_id)
+                                                    <span class="badge bg-success">
+                                                        Disc {{ $item->discount_percentage }}%
+                                                    </span>
+                                                @endif
+                                            </strong>
+                                        </td>
                                         <td>{{ \Carbon\Carbon::create($item->created_at)->format('d M Y') }}</td>
                                         <td>
                                             <strong>
