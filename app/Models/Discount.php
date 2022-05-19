@@ -20,4 +20,9 @@ class Discount extends Model
     ];
 
     protected $hidden = [];
+
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class, 'discount_id', 'id');
+    }
 }
